@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.example.demo.dao.ProfileDAO;
-import com.example.demo.dto.ProfileDTO;
 import com.example.demo.entity.Profile;
 
 @Service(value = "profileService")
@@ -27,48 +25,29 @@ public class ProfileServiceImpl implements ProfileService
 	
 	@Override
 	@Transactional
-	public ResponseEntity<List<ProfileDTO>> showAllProfiles() 
+	public ResponseEntity<List<Profile>> showAllProfiles() 
 	{
-		List<ProfileDTO> profiles = new ArrayList<>();
-		for(Profile profile : profileDAO.findAll())
-		{
-			profiles.add(new ProfileDTO(profile.getName(),profile.getPhoneNumber(),profile.getEmail(),profile.isStatus()));
-		}
-		return ResponseEntity.ok().body(profiles);
+		return ResponseEntity.ok().body(profileDAO.showAll());
 	}
 
 	@Override
 	@Transactional
-	public ResponseEntity<ProfileDTO> showById(int id) 
+	public ResponseEntity<Profile> showById(int id) 
 	{
-		Profile fetchProfile = profileDAO.findById(id).get();
-		ProfileDTO profile = new ProfileDTO(fetchProfile.getName(),fetchProfile.getPhoneNumber(),fetchProfile.getEmail(),fetchProfile.isStatus());
-		return ResponseEntity.ok().body(profile);
-	}
-
-	@Override
-	@Transactional
-	public void updateProfie(Profile profile) 
-	{
-		if(profileDAO.findByPhoneNumber(profile.getPhoneNumber()).isPresent())
-		{
-			profileDAO.save(profile);
-		}
+		return ResponseEntity.ok().body(profileDAO.showById(id));
 	}
 
 	@Override
 	@Transactional
 	public void deleteProfile(int id) 
 	{
-		profileDAO.delete(profileDAO.findById(id).get());
+		profileDAO.delete(profileDAO.showById(id));
 	}
 
 	@Override
-	@Transactional
-	public ResponseEntity<ProfileDTO> getByPhoneNumber(long phoneNumber)
+	public void updateProfie(Profile profile) 
 	{
-		ProfileDTO profile = profileDAO.findByPhoneNumber(phoneNumber).get();
-		return ResponseEntity.ok().body(profile);
+		profileDAO.update(profile);
 	}
 
 }

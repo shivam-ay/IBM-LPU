@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.ProfileDTO;
 import com.example.demo.entity.Profile;
 import com.example.demo.service.ProfileService;
 
@@ -29,7 +28,7 @@ public class ProfileController
 	}
 	
 	@GetMapping("/profiles")
-	public ResponseEntity<List<ProfileDTO>> showAllProfiles()
+	public ResponseEntity<List<Profile>> showAllProfiles()
 	{
 		return profileService.showAllProfiles();
 	}
@@ -47,7 +46,7 @@ public class ProfileController
 	}
 	
 	@GetMapping("/profiles/{id}")
-	public ResponseEntity<ProfileDTO> getById(@PathVariable int id)
+	public ResponseEntity<Profile> getById(@PathVariable int id)
 	{
 		return profileService.showById(id);	
 	}

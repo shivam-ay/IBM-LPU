@@ -25,8 +25,7 @@ public class ProfileDAOImpl implements ProfileDAO
 	@Override
 	public List<Profile> showAll() 
 	{
-		TypedQuery<Profile> query = entityManager.createQuery("from PROFILE",Profile.class);
-		return query.getResultList();
+		return entityManager.createQuery("from Profile",Profile.class).getResultList();
 	}
 
 	@Override
