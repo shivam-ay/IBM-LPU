@@ -53,8 +53,8 @@ public class AccountDetails {
 	@Column(name="Opening_Date")
 	private LocalDateTime openingDate;	
 	
-//    @ManyToOne(optional = false)
-//	@JoinColumn(name="Branch_Id") //According the customer location the branch is assigned.
-//	BranchDetails branchdetails;
+    @ManyToOne(optional = false)
+	@JoinColumn(name="Branch_Id") //According the customer location the branch is assigned.
+	BranchDetails branchdetails;
     
 }

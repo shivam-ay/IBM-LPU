@@ -60,9 +60,9 @@ public class CustomerDetails {
 	@Column(name = "Opening_Balance")
 	private int openingBalance;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "address_id")
-//	private AddressDetails address;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
+	private AddressDetails address;
 
 	@Column(name = "BranchId")
 	private int branchId;

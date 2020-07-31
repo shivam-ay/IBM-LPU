@@ -13,7 +13,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "loan_details")
 public class LoanDetails 
@@ -32,6 +30,10 @@ public class LoanDetails
 	@Column(name = "loan_id")
 	private long loanId;
 	
+	@Column(name = "customer_name")
+	@NotNull
+	private String customerName;
+	
 	@Column(name = "loan_type")
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -41,18 +43,18 @@ public class LoanDetails
 	private int interestRate;
 	
 	@Column(name = "loan_amonut")
-	@Min(value = 1000, message = "Minimum amount must be 1000 INR")
-	@Max(value = 4000000, message = "Maximum amount can not exceed 4000000")
+	@Min(value = 1000,message = "Minimum amount must be 1000 INR")
+	@Max(value = 4000000,message = "Minimun amount can not exceed 4000000 INR")
 	@NotNull
 	private long loanAmount;
 	
 	@Column(name = "duration")
-	@Min(value = 6, message = "Minimum duration must be of 6 months")
-	@Max(value = 120, message = "Maximum duration can not exceed 120 months")
+	@Min(value = 6,message = "Minimum duration must be 6 months.")
+	@Max(value = 120,message = "Maximum duration can not exceed 120 months")
 	@NotNull
 	private double duration;
 	
-	@Column(name = "loan_status",columnDefinition = "pending")
+	@Column(name = "loan_status")
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private status loanStatus;
@@ -62,14 +64,13 @@ public class LoanDetails
 	
 	@Column(name = "account_number")
 	@NotNull
-	private String accoutnNumber;
+	private long accountNumber;
 	
 	@Column(name = "varification_file")
 	@NotNull
 	private String varificationFile;
 	
-	
-	private enum status
+	public enum status
 	{
 		approved,rejected,pending
 	};
@@ -79,9 +80,9 @@ public class LoanDetails
 	}
 	
 	public LoanDetails(@NotNull type loanType, int interestRate,
-			@Min(value = 1000, message = "Minimum amount must be 1000 INR") @Max(value = 4000000, message = "Maximum amount can not exceed 4000000") @NotNull long loanAmount,
-			@Min(value = 6, message = "Minimum duration must be of 6 months") @Max(value = 120, message = "Maximum duration can not exceed 120 months") @NotNull @Min(value = 6, message = "Minimum duration must be of 6 months") @Max(value = 120, message = "Maximum duration can not exceed 120 months") @NotNull double duration,
-			@NotNull status loanStatus, @NotNull String accoutnNumber, @NotNull String varificationFile)
+			@Min(value = 1000) @Max(value = 4000000) @NotNull long loanAmount,
+			@Min(value = 6) @Max(value = 120) @NotNull @Min(value = 6) @Max(value = 120) @NotNull double duration,
+			@NotNull status loanStatus, @NotNull long accoutnNumber, @NotNull String varificationFile, @NotNull String customerName)
 	{
 		super();
 		this.loanType = loanType;
@@ -89,9 +90,9 @@ public class LoanDetails
 		this.loanAmount = loanAmount;
 		this.duration = duration;
 		this.loanStatus = loanStatus;
-		this.accoutnNumber = accoutnNumber;
+		this.accountNumber = accoutnNumber;
 		this.varificationFile = varificationFile;
-		this.emi = (loanAmount*interestRate*Math.pow((1+interestRate),(duration/12))/(Math.pow((1+interestRate), (duration-1))));
-	};
+		this.customerName = customerName;
+	}
 	
 }
